@@ -18,4 +18,8 @@ model_path = f'{model_path}{model_id}'
 # Available models = ['tiny.en', 'tiny', 'base.en', 'base', 'small.en', 'small', 'medium.en', 'medium', 'large-v1', 'large-v2', 'large-v3', 'large']
 
 # The whisper module’s load_model() method loads a whisper model in your Python application. You must pass the model name as a parameter to the load_model() method.
-model = whisper.load_model(model_id, download_root=model_path)
+try:
+    model = whisper.load_model(model_id, download_root=model_path)
+    print("Model has successfully been downloaded")
+except Exception as e:
+    print(f"Error downloading the model: {e}")
