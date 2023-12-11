@@ -3,6 +3,7 @@ import streamlit as st
 import sys
 import torch 
 import whisper
+import librosa
 
 
 @st.cache_resource
