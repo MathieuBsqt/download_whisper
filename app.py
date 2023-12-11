@@ -4,6 +4,7 @@ import sys
 import torch 
 import whisper
 import io
+import torchaudio
 
 
 @st.cache_resource
