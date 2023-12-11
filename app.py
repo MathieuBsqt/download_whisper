@@ -37,19 +37,22 @@ def load_model(model_id, model_path):
     
     
 def main():
+    # Display Ttitle
+    st.title("Whisper - Speech to Text App")
+
+    # Get args
     model_id = sys.argv[1]
     model_path = sys.argv[2]
 
     model = load_model(model_id, model_path)
 
-    st.set_page_config(page_title="Whisper - Speech to Text App", page_icon="📝")
-
-    # Upload audio file
+    # Upload audio file widget
     audio_file = st.file_uploader("Upload an audio file", type=["mp3", "wav"])
-
+    
     transcript = {}
     transcript["text"] = "The audio file could not be transcribed :("
-    
+
+    # Audio player
     if audio_file:
         st.audio(audio_file)
 
