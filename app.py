@@ -5,6 +5,7 @@ import torch
 import whisper
 
 
+@st.cache_resource
 def load_model(model_id, model_path):
     with st.spinner("Loading model..."):
         # Check if two command-line arguments are provided
@@ -54,6 +55,7 @@ def main():
 
     # Audio player
     if audio_file:
+        audio_file = uploaded_file.read()
         st.audio(audio_file)
 
         # Transcribe audio on button click
