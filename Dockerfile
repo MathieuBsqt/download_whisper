@@ -8,7 +8,7 @@ RUN apt-get update && \
 # Set the working directory inside the container
 # Copy the application code and requirements file into the container
 WORKDIR /workspace
-ADD requirements.txt /workspace
+ADD . /workspace
 
 # Install the Python dependencies
 RUN pip install -r requirements.txt
@@ -22,4 +22,4 @@ ENV MODEL_ID="large-v3"
 ENV MODEL_PATH="/workspace/whisper-model"
 
 # Define the command to run the Streamlit application when the container is launched
-CMD [ "streamlit" , "run" , "/workspace/main.py", "--server.address=0.0.0.0", "${MODEL_ID}", "${MODEL_PATH}"]
+CMD [ "streamlit" , "run" , "/workspace/app.py", "--server.address=0.0.0.0", "${MODEL_ID}", "${MODEL_PATH}"]
