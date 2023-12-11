@@ -1,3 +1,9 @@
+# Base image to start from
+FROM python:3.10
+
+RUN apt-get update && \
+    apt-get install -y ffmpeg libsndfile1-dev
+
 WORKDIR /workspace
 ADD requirements.txt /workspace
 
