@@ -3,8 +3,6 @@ import streamlit as st
 import sys
 import torch 
 import whisper
-import io
-import torchaudio
 
 
 @st.cache_resource
@@ -61,9 +59,7 @@ def main():
         st.audio(audio_file)
         
         # Convert to numpy array
-        audio_file = io.BytesIO(audio_file)
-        waveform, sample_rate = torchaudio.load(audio_file)
-        audio_file = waweform.numpy()
+        audio_file, _ = librosa.load(audio_file)
         
         # Transcribe audio on button click
         if st.button("Transcribe"):
