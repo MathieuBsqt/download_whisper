@@ -59,7 +59,11 @@ def main():
         # Read file content
         audio_file = audio_file.read()
         st.audio(audio_file)
+        
+        # Convert to numpy array
         audio_file = io.BytesIO(audio_file)
+        waveform, sample_rate = torchaudio.load(audio_file)
+        audio_file = waweform.numpy()
         
         # Transcribe audio on button click
         if st.button("Transcribe"):
