@@ -1,6 +1,6 @@
 import sys
 
-# Check if at least one command-line argument is provided
+# # Check if two command-line arguments are provided
 if len(sys.argv) !=3:
     print("Usage: python main.py <whisper_model_id> <whisper_model_output_path>")
     print("Example: python main.py large-v3 /workspace/whisper-model/")
