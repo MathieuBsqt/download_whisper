@@ -3,6 +3,7 @@ import streamlit as st
 import sys
 import torch 
 import whisper
+import io
 
 
 @st.cache_resource
@@ -40,7 +41,7 @@ def load_model(model_id, model_path):
 def main():
     # Display Ttitle
     st.title("Whisper - Speech to Text App")
-
+    
     # Get args
     model_id = sys.argv[1]
     model_path = sys.argv[2]
@@ -52,12 +53,14 @@ def main():
     
     transcript = {}
     transcript["text"] = "The audio file could not be transcribed :("
-
+    
     # Audio player
     if audio_file:
+        # Read file content
         audio_file = audio_file.read()
         st.audio(audio_file)
-
+        audio_file = io.BytesIO(audio_file)
+        
         # Transcribe audio on button click
         if st.button("Transcribe"):
             with st.spinner("Transcribing audio..."):
