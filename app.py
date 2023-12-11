@@ -55,7 +55,7 @@ def main():
 
     # Audio player
     if audio_file:
-        audio_file = uploaded_file.read()
+        audio_file = audio_file.read()
         st.audio(audio_file)
 
         # Transcribe audio on button click
