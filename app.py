@@ -18,7 +18,7 @@ def load_model(model_id, model_path):
             model_path += '/'
     
         # Get complete model file path
-        model_path = f'{model_path}{model_id}.pt'
+        model_path = f'{model_path}{model_id}/{model_id}.pt'
         
         # Define available device (CPU/GPU)
         device = "cuda" if torch.cuda.is_available() else "cpu"
