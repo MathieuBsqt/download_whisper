@@ -1,7 +1,7 @@
 import numpy as np
 import streamlit as st
 import sys
-import torch 
+import torch
 import whisper
 import librosa
 import os
@@ -21,13 +21,13 @@ def load_model(model_id, model_path):
 
     # Get complete model file path
     model_path = f'{model_path}{model_id}/{model_id}.pt'
-    
+
     # Define available device (CPU/GPU)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    
+
     # Load model on available device
     model = whisper.load_model(model_path, device=device)
-    
+
     # Display model's parameters in the app's logs
     print(
         f"Model will be run on {device}\n"
@@ -36,43 +36,43 @@ def load_model(model_id, model_path):
     )
 
     return model
-    
-    
+
+
 def main():
-    #print(sys.argv[1], sys.argv[2])
-    #print(os.environ.get('MODEL_ID'))
-    # Display Ttitle
+    # Display Ttitle                
     st.title("Whisper - Speech to Text App")
-    
-    # Get args
-    model_id = os.environ.get('MODEL_ID')
+                                            
+    # Get args                              
+    model_id = os.environ.get('MODEL_ID')   
     model_path = os.environ.get('MODEL_PATH')
-
-    model = load_model(model_id, model_path)
-
-    # Upload audio file widget
+                                             
+    model = load_model(model_id, model_path) 
+                                             
+    # Upload audio file widget               
     audio_file = st.file_uploader("Upload an audio file", type=["mp3", "wav"])
-    
-    transcript = {}
-    transcript["text"] = "The audio file could not be transcribed :("
-    
-    # Audio player
-    if audio_file:
-        # Read file content
+                                                                              
+    transcript = {}                                                           
+    transcript["text"] = "The audio file could not be transcribed :("         
+    options = dict(language="French", beam_size=5, best_of=5)                 
+    transcribe_options = dict(task="transcribe", **options)          
+                                                                     
+    # Audio player                                                   
+    if audio_file:                                           
+        # Read file content                                
         audio_file = audio_file.read()
-        st.audio(audio_file)
-        
+        st.audio(audio_file)          
+                                      
         # Convert bytes to a file-like object using io.BytesIO
-        audio_file = io.BytesIO(audio_file)
-
-        # Convert to numpy array
-        audio_file, _ = librosa.load(audio_file)
-        
-        # Transcribe audio on button click
-        if st.button("Transcribe"):
+        audio_file = io.BytesIO(audio_file)                   
+                                                              
+        # Convert to numpy array                              
+        audio_file, _ = librosa.load(audio_file)              
+                                                
+        # Transcribe audio on button click      
+        if st.button("Transcribe"):             
             with st.spinner("Transcribing audio..."):
-                transcript = model.transcribe(audio_file)
-            st.write(transcript["text"])
-
-if __name__ == "__main__":
+                transcript = model.transcribe(audio_file, **transcribe_options)
+            st.write(transcript["text"])                                       
+                                                                               
+if __name__ == "__main__":                                                     
     main()
