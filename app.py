@@ -4,7 +4,8 @@ import sys
 import torch 
 import whisper
 import librosa
-
+import os
+import io
 
 @st.cache_resource
 def load_model(model_id, model_path):
@@ -38,12 +39,14 @@ def load_model(model_id, model_path):
     
     
 def main():
+    #print(sys.argv[1], sys.argv[2])
+    #print(os.environ.get('MODEL_ID'))
     # Display Ttitle
     st.title("Whisper - Speech to Text App")
     
     # Get args
-    model_id = sys.argv[1]
-    model_path = sys.argv[2]
+    model_id = os.environ.get('MODEL_ID')
+    model_path = os.environ.get('MODEL_PATH')
 
     model = load_model(model_id, model_path)
 
@@ -59,6 +62,9 @@ def main():
         audio_file = audio_file.read()
         st.audio(audio_file)
         
+        # Convert bytes to a file-like object using io.BytesIO
+        audio_file = io.BytesIO(audio_file)
+
         # Convert to numpy array
         audio_file, _ = librosa.load(audio_file)
         
