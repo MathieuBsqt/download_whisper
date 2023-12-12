@@ -7,10 +7,11 @@ import librosa
 import os
 import io
 
+
 @st.cache_resource
 def load_model(model_id, model_path):
     # Check if two command-line arguments are provided
-    if len(sys.argv) !=3:
+    if len(sys.argv) != 3:
         print("Usage: python app.py <whisper_model_id> <whisper_model_output_path>")
         print("Example: python app.py large-v3 /workspace/whisper-model/")
         sys.exit(1)
@@ -50,9 +51,8 @@ def main():
                                              
     # Upload audio file widget               
     audio_file = st.file_uploader("Upload an audio file", type=["mp3", "wav"])
-                                                                              
-    transcript = {}                                                           
-    transcript["text"] = "The audio file could not be transcribed :("         
+                                                                                                                                    
+    transcript = {"text": "The audio file could not be transcribed :("}     
     options = dict(language="French", beam_size=5, best_of=5)                 
     transcribe_options = dict(task="transcribe", **options)          
                                                                      
@@ -73,6 +73,7 @@ def main():
             with st.spinner("Transcribing audio..."):
                 transcript = model.transcribe(audio_file, **transcribe_options)
             st.write(transcript["text"])                                       
-                                                                               
+
+
 if __name__ == "__main__":                                                     
     main()
