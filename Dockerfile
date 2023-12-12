@@ -22,4 +22,4 @@ ENV MODEL_ID="large-v3"
 ENV MODEL_PATH="/workspace/whisper-model"
 
 # Define the command to run the Streamlit application when the container is launched
-CMD [ "streamlit" , "run" , "/workspace/app.py", "--server.address=0.0.0.0", "${MODEL_ID}", "${MODEL_PATH}"]
+CMD [ "streamlit" , "run" , "/workspace/app.py", "--server.address=0.0.0.0", "$MODEL_ID", "$MODEL_PATH"]
